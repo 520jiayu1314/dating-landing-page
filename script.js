@@ -1,38 +1,53 @@
 const form = document.getElementById("profileForm");
 
-form.addEventListener("submit", function(event) {
-
+form.addEventListener("submit", async function (event) {
     event.preventDefault();
 
-    const name =
-        document.getElementById("name").value;
+    const name = document.getElementById("name").value.trim();
+    const age = Number(document.getElementById("age").value);
+    const city = document.getElementById("city").value.trim();
+    const interests = document.getElementById("interests").value.trim();
+    const about = document.getElementById("about").value.trim();
 
-    const age =
-        document.getElementById("age").value;
+    const successMessage = document.getElementById("successMessage");
 
-    const city =
-        document.getElementById("city").value;
+    // 基本检查
+    if (!name || !age || !city) {
+        successMessage.textContent =
+            "Please fill in your name, age and city.";
+        return;
+    }
 
-    const interests =
-        document.getElementById("interests").value;
+    try {
+        const response = await fetch("/api/profile", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name,
+                age,
+                city,
+                interests,
+                about
+            })
+        });
 
-    const about =
-        document.getElementById("about").value;
+        const result = await response.json();
 
+        if (!response.ok || !result.success) {
+            throw new Error(result.error || "Submission failed");
+        }
 
-    console.log({
-        name,
-        age,
-        city,
-        interests,
-        about
-    });
+        successMessage.textContent =
+            "Your profile has been submitted successfully!";
 
+        form.reset();
 
-    document.getElementById("successMessage").innerHTML =
-        "Your profile has been submitted successfully!";
+    } catch (error) {
+        console.error(error);
 
-
-    form.reset();
-
+        successMessage.textContent =
+            "Something went wrong. Please try again.";
+    }
 });
