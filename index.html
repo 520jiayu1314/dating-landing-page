@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Meet Someone Special</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+    <div class="logo">
+        MeetUp
+    </div>
+</header>
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <h1>
+            Meet Someone Special
+        </h1>
+
+        <p>
+            Connect with people who share your interests,
+            values and lifestyle.
+        </p>
+
+        <a href="#profile" class="main-button">
+            Create Your Profile
+        </a>
+
+    </div>
+
+</section>
+
+
+<section id="profile" class="profile-section">
+
+    <div class="form-container">
+
+        <h2>Create Your Profile</h2>
+
+        <p class="subtitle">
+            Tell us a little about yourself.
+        </p>
+
+        <form id="profileForm">
+
+            <label>
+                Name
+            </label>
+
+            <input
+                type="text"
+                id="name"
+                placeholder="Your name"
+                required
+            >
+
+
+            <label>
+                Age
+            </label>
+
+            <input
+                type="number"
+                id="age"
+                placeholder="Your age"
+                min="18"
+                required
+            >
+
+
+            <label>
+                City
+            </label>
+
+            <select id="city" required>
+
+                <option value="">
+                    Select your city
+                </option>
+
+                <option>New York</option>
+                <option>Los Angeles</option>
+                <option>Chicago</option>
+                <option>Houston</option>
+                <option>Phoenix</option>
+                <option>Philadelphia</option>
+                <option>San Antonio</option>
+                <option>San Diego</option>
+                <option>Dallas</option>
+                <option>San Jose</option>
+
+            </select>
+
+
+            <label>
+                Interests
+            </label>
+
+            <input
+                type="text"
+                id="interests"
+                placeholder="Travel, music, sports..."
+            >
+
+
+            <label>
+                About Me
+            </label>
+
+            <textarea
+                id="about"
+                placeholder="Tell us about yourself..."
+                rows="5"
+            ></textarea>
+
+
+            <button type="submit">
+                Submit Profile
+            </button>
+
+        </form>
+
+        <div id="successMessage"></div>
+
+    </div>
+
+</section>
+
+
+<footer>
+
+    <p>
+        © 2026 MeetUp. All rights reserved.
+    </p>
+
+</footer>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
