@@ -1,0 +1,16 @@
+{
+  "name": "dating-landing-page",
+  "main": "worker.js",
+  "compatibility_date": "2026-09-13",
+  "assets": {
+    "directory": ".",
+    "binding": "ASSETS"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "kusi1",
+      "database_id": "edf923ce-1c6d-4507-a32a-24893ac7a444"
+    }
+  ]
+}
