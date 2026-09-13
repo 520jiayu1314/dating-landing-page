@@ -1,353 +1,450 @@
-```javascript
+// ==========================================
+// Dating Landing Page - Main Script
+// ==========================================
+
 let currentStep = 1;
 
 let userProfile = {
     name: "",
-    age: 0,
+    age: "",
     city: "",
+
     ageRange: "",
     personality: [],
     relationshipGoal: "",
+
     interests: "",
     about: "",
     activities: []
 };
 
 
-/*
-========================================
-页面加载
-========================================
-*/
+// ==========================================
+// Page Loaded
+// ==========================================
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function () {
+
+    const profileForm = document.getElementById("profileForm");
+
+    if (profileForm) {
+        profileForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            goToStep2();
+        });
+    }
 
     showStep(1);
-
-    const continue1 = document.getElementById("continue1");
-    const continue2 = document.getElementById("continue2");
-    const submitProfile = document.getElementById("submitProfile");
-    const back2 = document.getElementById("back2");
-    const back3 = document.getElementById("back3");
-
-
-    /*
-    ========================================
-    Step 1 → Step 2
-    ========================================
-    */
-
-    if (continue1) {
-        continue1.addEventListener("click", () => {
-
-            const name =
-                document.getElementById("name")?.value.trim();
-
-            const age =
-                Number(document.getElementById("age")?.value);
-
-            const city =
-                document.getElementById("city")?.value.trim();
-
-
-            if (!name) {
-                alert("Please enter your name.");
-                return;
-            }
-
-            if (!age || age < 18 || age > 100) {
-                alert("Please enter a valid age.");
-                return;
-            }
-
-            if (!city) {
-                alert("Please enter your city.");
-                return;
-            }
-
-
-            userProfile.name = name;
-            userProfile.age = age;
-            userProfile.city = city;
-
-            showStep(2);
-        });
-    }
-
-
-    /*
-    ========================================
-    Step 2 → Step 3
-    ========================================
-    */
-
-    if (continue2) {
-        continue2.addEventListener("click", () => {
-
-            const ageRange =
-                document.querySelector(
-                    'input[name="ageRange"]:checked'
-                )?.value || "";
-
-            const personality =
-                Array.from(
-                    document.querySelectorAll(
-                        'input[name="personality"]:checked'
-                    )
-                ).map(el => el.value);
-
-            const relationshipGoal =
-                document.querySelector(
-                    'input[name="relationshipGoal"]:checked'
-                )?.value || "";
-
-
-            if (!ageRange) {
-                alert("Please select a preferred age range.");
-                return;
-            }
-
-            if (personality.length === 0) {
-                alert("Please select at least one personality.");
-                return;
-            }
-
-            if (!relationshipGoal) {
-                alert("Please select your relationship goal.");
-                return;
-            }
-
-
-            userProfile.ageRange = ageRange;
-            userProfile.personality = personality;
-            userProfile.relationshipGoal = relationshipGoal;
-
-            showStep(3);
-        });
-    }
-
-
-    /*
-    ========================================
-    Step 2 返回
-    ========================================
-    */
-
-    if (back2) {
-        back2.addEventListener("click", () => {
-            showStep(1);
-        });
-    }
-
-
-    /*
-    ========================================
-    Step 3 返回
-    ========================================
-    */
-
-    if (back3) {
-        back3.addEventListener("click", () => {
-            showStep(2);
-        });
-    }
-
-
-    /*
-    ========================================
-    Step 3 → 提交
-    ========================================
-    */
-
-    if (submitProfile) {
-        submitProfile.addEventListener("click", async () => {
-
-            userProfile.interests =
-                document.getElementById("interests")?.value.trim() || "";
-
-            userProfile.about =
-                document.getElementById("about")?.value.trim() || "";
-
-
-            userProfile.activities =
-                Array.from(
-                    document.querySelectorAll(
-                        'input[name="activities"]:checked'
-                    )
-                ).map(el => el.value);
-
-
-            /*
-            ========================================
-            防止重复点击
-            ========================================
-            */
-
-            submitProfile.disabled = true;
-
-            const originalText = submitProfile.textContent;
-
-            submitProfile.textContent = "Saving...";
-
-
-            try {
-
-                const response = await fetch("/api/profile", {
-                    method: "POST",
-
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-
-                    body: JSON.stringify(userProfile)
-                });
-
-
-                const result = await response.json();
-
-
-                /*
-                ========================================
-                已经提交过
-                ========================================
-                */
-
-                if (
-                    response.status === 409 &&
-                    result.alreadySubmitted
-                ) {
-
-                    alert(
-                        "Your profile has already been submitted."
-                    );
-
-                    submitProfile.disabled = false;
-                    submitProfile.textContent = originalText;
-
-                    return;
-                }
-
-
-                /*
-                ========================================
-                其他错误
-                ========================================
-                */
-
-                if (!response.ok || !result.success) {
-
-                    alert(
-                        result.error ||
-                        "Something went wrong. Please try again."
-                    );
-
-                    submitProfile.disabled = false;
-                    submitProfile.textContent = originalText;
-
-                    return;
-                }
-
-
-                /*
-                ========================================
-                成功
-                ========================================
-                */
-
-                showMatch();
-
-            } catch (error) {
-
-                console.error(error);
-
-                alert(
-                    "Unable to connect to the server. Please try again."
-                );
-
-                submitProfile.disabled = false;
-                submitProfile.textContent = originalText;
-            }
-
-        });
-    }
-
 });
 
 
-/*
-========================================
-切换步骤
-========================================
-*/
+// ==========================================
+// STEP 1
+// ==========================================
+
+function goToStep2() {
+
+    const nameInput = document.getElementById("name");
+    const ageInput = document.getElementById("age");
+    const cityInput = document.getElementById("city");
+
+    const name = nameInput.value.trim();
+    const age = Number(ageInput.value);
+    const city = cityInput.value.trim();
+
+
+    // -----------------------------
+    // Validation
+    // -----------------------------
+
+    if (!name) {
+        alert("Please enter your name.");
+        nameInput.focus();
+        return;
+    }
+
+    if (!Number.isInteger(age) || age < 18 || age > 100) {
+        alert("Please enter a valid age between 18 and 100.");
+        ageInput.focus();
+        return;
+    }
+
+    if (!city) {
+        alert("Please enter your city.");
+        cityInput.focus();
+        return;
+    }
+
+
+    // -----------------------------
+    // Save information
+    // -----------------------------
+
+    userProfile.name = name;
+    userProfile.age = age;
+    userProfile.city = city;
+
+
+    // -----------------------------
+    // Go to Step 2
+    // -----------------------------
+
+    showStep(2);
+}
+
+
+// ==========================================
+// STEP 2
+// ==========================================
+
+function goToStep3() {
+
+    // -----------------------------
+    // Age range
+    // -----------------------------
+
+    const ageRangeElement =
+        document.querySelector('input[name="ageRange"]:checked');
+
+    if (!ageRangeElement) {
+        alert("Please select a preferred age range.");
+        return;
+    }
+
+
+    // -----------------------------
+    // Personality
+    // -----------------------------
+
+    const personalityElements =
+        document.querySelectorAll('input[name="personality"]:checked');
+
+    const personality = Array.from(personalityElements)
+        .map(function (element) {
+            return element.value;
+        });
+
+
+    if (personality.length === 0) {
+        alert("Please select at least one personality.");
+        return;
+    }
+
+
+    // -----------------------------
+    // Relationship goal
+    // -----------------------------
+
+    const relationshipGoalElement =
+        document.getElementById("relationshipGoal");
+
+    if (!relationshipGoalElement) {
+        alert("Relationship goal field was not found.");
+        return;
+    }
+
+    const relationshipGoal =
+        relationshipGoalElement.value.trim();
+
+
+    if (!relationshipGoal) {
+        alert("Please select your relationship goal.");
+        relationshipGoalElement.focus();
+        return;
+    }
+
+
+    // -----------------------------
+    // Save information
+    // -----------------------------
+
+    userProfile.ageRange = ageRangeElement.value;
+
+    userProfile.personality = personality;
+
+    userProfile.relationshipGoal =
+        relationshipGoal;
+
+
+    // -----------------------------
+    // Go to Step 3
+    // -----------------------------
+
+    showStep(3);
+}
+
+
+// ==========================================
+// STEP 3
+// ==========================================
+
+async function submitProfile() {
+
+    const interestsElement =
+        document.getElementById("interests");
+
+    const aboutElement =
+        document.getElementById("about");
+
+
+    // -----------------------------
+    // Collect text fields
+    // -----------------------------
+
+    const interests =
+        interestsElement
+            ? interestsElement.value.trim()
+            : "";
+
+    const about =
+        aboutElement
+            ? aboutElement.value.trim()
+            : "";
+
+
+    // -----------------------------
+    // Activities
+    // -----------------------------
+
+    const activityElements =
+        document.querySelectorAll(
+            'input[name="activities"]:checked'
+        );
+
+    const activities =
+        Array.from(activityElements)
+            .map(function (element) {
+                return element.value;
+            });
+
+
+    // -----------------------------
+    // Save information
+    // -----------------------------
+
+    userProfile.interests = interests;
+
+    userProfile.about = about;
+
+    userProfile.activities = activities;
+
+
+    // -----------------------------
+    // Disable submit button
+    // -----------------------------
+
+    const submitButton =
+        document.querySelector(
+            '#step3 button[onclick="submitProfile()"]'
+        );
+
+    if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.dataset.originalText =
+            submitButton.textContent;
+
+        submitButton.textContent =
+            "Finding Your Match...";
+    }
+
+
+    // -----------------------------
+    // Clear previous error
+    // -----------------------------
+
+    const errorMessage =
+        document.getElementById("errorMessage");
+
+    if (errorMessage) {
+        errorMessage.textContent = "";
+    }
+
+
+    try {
+
+        // ==========================================
+        // Send to Cloudflare Worker
+        // ==========================================
+
+        const response = await fetch(
+            "/api/profile",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify(userProfile)
+            }
+        );
+
+
+        let result = {};
+
+        try {
+            result = await response.json();
+        } catch (jsonError) {
+            result = {};
+        }
+
+
+        // ==========================================
+        // Already submitted
+        // ==========================================
+
+        if (
+            response.status === 409 &&
+            result.alreadySubmitted
+        ) {
+
+            alert(
+                "This browser has already submitted a profile."
+            );
+
+            return;
+        }
+
+
+        // ==========================================
+        // Server error
+        // ==========================================
+
+        if (
+            !response.ok ||
+            !result.success
+        ) {
+
+            const errorText =
+                result.error ||
+                "Something went wrong. Please try again.";
+
+            if (errorMessage) {
+                errorMessage.textContent =
+                    errorText;
+            } else {
+                alert(errorText);
+            }
+
+            return;
+        }
+
+
+        // ==========================================
+        // SUCCESS
+        // ==========================================
+
+        console.log(
+            "Profile submitted successfully:",
+            result
+        );
+
+
+        // Go to matching page
+        showMatch();
+
+
+    } catch (error) {
+
+        console.error(
+            "Submit error:",
+            error
+        );
+
+
+        if (errorMessage) {
+
+            errorMessage.textContent =
+                "Unable to connect to the server. Please check your internet connection and try again.";
+
+        } else {
+
+            alert(
+                "Unable to connect to the server. Please try again."
+            );
+
+        }
+
+    } finally {
+
+        // Re-enable button
+
+        if (submitButton) {
+
+            submitButton.disabled = false;
+
+            submitButton.textContent =
+                submitButton.dataset.originalText ||
+                "Find My Match ❤️";
+        }
+    }
+}
+
+
+// ==========================================
+// STEP NAVIGATION
+// ==========================================
 
 function showStep(step) {
+
+    const steps =
+        document.querySelectorAll(".step");
+
+
+    steps.forEach(function (element) {
+
+        element.classList.remove("active");
+
+    });
+
+
+    const targetStep =
+        document.getElementById(
+            "step" + step
+        );
+
+
+    if (!targetStep) {
+
+        console.error(
+            "Step not found:",
+            step
+        );
+
+        return;
+    }
+
+
+    targetStep.classList.add("active");
+
 
     currentStep = step;
 
 
-    document.querySelectorAll(".step").forEach(el => {
-
-        el.classList.remove("active");
-
-    });
-
-
-    const target =
-        document.getElementById(`step${step}`);
-
-    if (target) {
-        target.classList.add("active");
-    }
-
-
-    /*
-    ========================================
-    更新进度条
-    ========================================
-    */
-
-    document.querySelectorAll(".progress-step").forEach(el => {
-
-        const stepNumber =
-            Number(el.dataset.step);
-
-        el.classList.remove("active", "completed");
-
-        if (stepNumber === step) {
-            el.classList.add("active");
-        }
-
-        if (stepNumber < step) {
-            el.classList.add("completed");
-        }
-
-    });
-
-
+    // Scroll to top
     window.scrollTo({
         top: 0,
         behavior: "smooth"
     });
+
+
+    console.log(
+        "Current step:",
+        currentStep
+    );
 }
 
 
-/*
-========================================
-显示推荐对象
-========================================
-*/
+// ==========================================
+// SHOW MATCH
+// ==========================================
 
 function showMatch() {
 
-    showStep(4);
-
-
-    /*
-    ========================================
-    当前先使用演示对象
-    后面可以改成 D1 自动匹配
-    ========================================
-    */
+    // --------------------------------------
+    // Match information
+    // --------------------------------------
 
     const match = {
 
@@ -358,86 +455,150 @@ function showMatch() {
         city: "Los Angeles, CA",
 
         about:
-            "Sophia is kind, warm, and enjoys traveling, cooking, and discovering new places.",
+            "She enjoys traveling, cooking, music and spending time with family. She is looking for a meaningful relationship with someone who shares similar interests.",
 
-        interests:
-            "Travel, Cooking, Music, Movies",
+        interests: [
+            "Travel",
+            "Cooking",
+            "Music",
+            "Family"
+        ],
 
         whatsapp:
-            "15551234567",
+            "https://wa.me/15551234567",
 
         telegram:
-            "sophia_match"
-
+            "https://t.me/sophia_match"
     };
 
+
+    // --------------------------------------
+    // Name
+    // --------------------------------------
 
     const matchName =
         document.getElementById("matchName");
 
+    if (matchName) {
+        matchName.textContent =
+            match.name;
+    }
+
+
+    // --------------------------------------
+    // Age
+    // --------------------------------------
+
     const matchAge =
         document.getElementById("matchAge");
+
+    if (matchAge) {
+        matchAge.textContent =
+            match.age + " years old";
+    }
+
+
+    // --------------------------------------
+    // City
+    // --------------------------------------
 
     const matchCity =
         document.getElementById("matchCity");
 
+    if (matchCity) {
+        matchCity.textContent =
+            match.city;
+    }
+
+
+    // --------------------------------------
+    // About
+    // --------------------------------------
+
     const matchAbout =
         document.getElementById("matchAbout");
 
-    const matchInterests =
-        document.getElementById("matchInterests");
-
-    const whatsapp =
-        document.getElementById("whatsappButton");
-
-    const telegram =
-        document.getElementById("telegramButton");
-
-
-    if (matchName) {
-        matchName.textContent = match.name;
-    }
-
-    if (matchAge) {
-        matchAge.textContent =
-            `${match.age} years old`;
-    }
-
-    if (matchCity) {
-        matchCity.textContent = match.city;
-    }
-
     if (matchAbout) {
-        matchAbout.textContent = match.about;
-    }
-
-    if (matchInterests) {
-        matchInterests.textContent = match.interests;
+        matchAbout.textContent =
+            match.about;
     }
 
 
-    if (whatsapp) {
+    // --------------------------------------
+    // Interests
+    // --------------------------------------
 
-        whatsapp.href =
-            `https://wa.me/${match.whatsapp}`;
+    const tagsContainer =
+        document.querySelector(
+            "#step4 .tags"
+        );
 
-        whatsapp.target = "_blank";
+    if (tagsContainer) {
 
-        whatsapp.rel = "noopener noreferrer";
+        tagsContainer.innerHTML = "";
 
+        match.interests.forEach(
+            function (interest) {
+
+                const tag =
+                    document.createElement("span");
+
+                tag.textContent =
+                    interest;
+
+                tagsContainer.appendChild(tag);
+            }
+        );
     }
 
 
-    if (telegram) {
+    // --------------------------------------
+    // WhatsApp
+    // --------------------------------------
 
-        telegram.href =
-            `https://t.me/${match.telegram}`;
+    const whatsappLink =
+        document.getElementById(
+            "whatsappLink"
+        );
 
-        telegram.target = "_blank";
+    if (whatsappLink) {
 
-        telegram.rel = "noopener noreferrer";
+        whatsappLink.href =
+            match.whatsapp;
 
+        whatsappLink.target =
+            "_blank";
+
+        whatsappLink.rel =
+            "noopener noreferrer";
     }
 
+
+    // --------------------------------------
+    // Telegram
+    // --------------------------------------
+
+    const telegramLink =
+        document.getElementById(
+            "telegramLink"
+        );
+
+    if (telegramLink) {
+
+        telegramLink.href =
+            match.telegram;
+
+        telegramLink.target =
+            "_blank";
+
+        telegramLink.rel =
+            "noopener noreferrer";
+    }
+
+
+    // --------------------------------------
+    // Show Step 4
+    // --------------------------------------
+
+    showStep(4);
 }
-```
