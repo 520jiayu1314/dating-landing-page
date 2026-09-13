@@ -1,149 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact Yolanda</title>
-
-  <link
-    rel="stylesheet"
-    href="/style.css"
-  >
-
+  <link rel="stylesheet" href="/style.css">
+  <script src="/script.js" defer></script>
 </head>
 
-
 <body>
+  <header class="header">
+    <a class="logo" href="/">MeetUp</a>
+    <span class="header-note">♥ Get in Touch</span>
+  </header>
 
-<main class="page">
+  <main class="contact-page">
+    <article class="contact-card">
+      <div class="contact-header">
+        <img
+          src="/yolanda.jpg"
+          alt="Yolanda"
+          class="contact-avatar"
+        >
 
-  <section class="contact-card">
+        <h1>Get in Touch</h1>
+        <p>Yolanda · 37 · Houston, TX</p>
+      </div>
 
-    <div class="contact-header">
+      <div class="contact-content">
+        <h2>Let's connect</h2>
 
-      <img
-        src="/yolanda.jpg"
-        alt="Yolanda"
-        class="contact-avatar"
-      >
+        <p class="subtitle">
+          Leave your email address and phone number if you'd like
+          Yolanda to be able to contact you.
+        </p>
 
-      <h1>
-        Get in Touch
-      </h1>
-
-      <p>
-        Yolanda · 37 · Houston, TX
-      </p>
-
-    </div>
-
-
-    <div class="contact-form-area">
-
-      <h2>
-        Let's connect
-      </h2>
-
-      <p class="form-intro">
-        Leave your email address and phone
-        number below if you'd like Yolanda
-        to be able to contact you.
-      </p>
-
-
-      <form id="contactForm">
-
-        <div class="form-group">
-
-          <label for="email">
-            Email address
-          </label>
-
+        <form id="contactForm">
+          <label for="email">Email address</label>
           <input
             id="email"
             name="email"
             type="email"
-            placeholder="you@example.com"
-            autocomplete="email"
             maxlength="200"
+            autocomplete="email"
+            placeholder="you@example.com"
             required
           >
 
-        </div>
-
-
-        <div class="form-group">
-
-          <label for="phone">
-            Phone number
-          </label>
-
+          <label for="phone">Phone number</label>
           <input
             id="phone"
             name="phone"
             type="tel"
-            placeholder="+1 555 123 4567"
+            maxlength="30"
             autocomplete="tel"
-            maxlength="50"
+            placeholder="+1 555 123 4567"
             required
           >
 
-        </div>
+          <p class="privacy-note">
+            By submitting this form, you voluntarily provide your email
+            address and phone number so you can be contacted regarding
+            this profile. Please only submit your own contact information.
+          </p>
 
+          <button type="submit" id="submitContact" class="button primary">
+            Send Contact Information
+          </button>
 
-        <div class="privacy-box">
+          <p
+            id="contactMessage"
+            class="message"
+            role="status"
+            aria-live="polite"
+          ></p>
+        </form>
 
-          By submitting this form, you voluntarily
-          provide your email address and phone
-          number so you can be contacted regarding
-          this profile.
+        <a href="/#match" class="back-link">
+          ← Back to Yolanda's profile
+        </a>
+      </div>
+    </article>
 
-          Please only submit your own contact
-          information.
+    <noscript>
+      <p>Please enable JavaScript to submit your contact information.</p>
+    </noscript>
+  </main>
 
-        </div>
-
-
-        <button
-          type="submit"
-          id="submitContact"
-          class="button primary form-button"
-        >
-          Send Contact Information
-        </button>
-
-
-        <div
-          id="contactMessage"
-          class="form-message"
-        ></div>
-
-      </form>
-
-
-      <a
-        href="/"
-        class="back-link"
-      >
-        ← Back to Yolanda's profile
-      </a>
-
-    </div>
-
-  </section>
-
-</main>
-
-
-<script src="/script.js"></script>
-
+  <footer>© 2026 MeetUp. All rights reserved.</footer>
 </body>
-
 </html>
