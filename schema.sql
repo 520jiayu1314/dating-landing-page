@@ -20,8 +20,8 @@ CREATE TABLE IF NOT EXISTS contacts (
     created_at TEXT DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE INDEX IF NOT EXISTS idx_contacts_created_at
-ON contacts(created_at);
-
 CREATE INDEX IF NOT EXISTS idx_profiles_visitor_id
 ON profiles(visitor_id);
+
+CREATE INDEX IF NOT EXISTS idx_contacts_created_at
+ON contacts(created_at);
