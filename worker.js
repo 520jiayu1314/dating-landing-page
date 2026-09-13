@@ -492,13 +492,13 @@ function completedPage(headOnly) {
       </a>
 
       <p>
-        <a href="https://wa.me/15551234567"
+        <a href="https://wa.me/13463951368"
            target="_blank"
            rel="noopener noreferrer">
           WhatsApp
         </a>
         ·
-        <a href="https://t.me/sophia_match"
+        <a href="https://t.me/jiayu888"
            target="_blank"
            rel="noopener noreferrer">
           Telegram
