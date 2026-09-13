@@ -2,10 +2,12 @@
   "name": "dating-landing-page",
   "main": "worker.js",
   "compatibility_date": "2026-09-12",
+
   "assets": {
-    "directory": ".",
+    "directory": "./public",
     "binding": "ASSETS"
   },
+
   "d1_databases": [
     {
       "binding": "DB",
