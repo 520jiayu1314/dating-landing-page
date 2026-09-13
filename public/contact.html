@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Contact Yolanda</title>
+
+  <link
+    rel="stylesheet"
+    href="/style.css"
+  >
+
+</head>
+
+
+<body>
+
+<main class="page">
+
+  <section class="contact-card">
+
+    <div class="contact-header">
+
+      <img
+        src="/yolanda.jpg"
+        alt="Yolanda"
+        class="contact-avatar"
+      >
+
+      <h1>
+        Get in Touch
+      </h1>
+
+      <p>
+        Yolanda · 37 · Houston, TX
+      </p>
+
+    </div>
+
+
+    <div class="contact-form-area">
+
+      <h2>
+        Let's connect
+      </h2>
+
+      <p class="form-intro">
+        Leave your email address and phone
+        number below if you'd like Yolanda
+        to be able to contact you.
+      </p>
+
+
+      <form id="contactForm">
+
+        <div class="form-group">
+
+          <label for="email">
+            Email address
+          </label>
+
+          <input
+            id="email"
+            name="email"
+            type="email"
+            placeholder="you@example.com"
+            autocomplete="email"
+            maxlength="200"
+            required
+          >
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label for="phone">
+            Phone number
+          </label>
+
+          <input
+            id="phone"
+            name="phone"
+            type="tel"
+            placeholder="+1 555 123 4567"
+            autocomplete="tel"
+            maxlength="50"
+            required
+          >
+
+        </div>
+
+
+        <div class="privacy-box">
+
+          By submitting this form, you voluntarily
+          provide your email address and phone
+          number so you can be contacted regarding
+          this profile.
+
+          Please only submit your own contact
+          information.
+
+        </div>
+
+
+        <button
+          type="submit"
+          id="submitContact"
+          class="button primary form-button"
+        >
+          Send Contact Information
+        </button>
+
+
+        <div
+          id="contactMessage"
+          class="form-message"
+        ></div>
+
+      </form>
+
+
+      <a
+        href="/"
+        class="back-link"
+      >
+        ← Back to Yolanda's profile
+      </a>
+
+    </div>
+
+  </section>
+
+</main>
+
+
+<script src="/script.js"></script>
+
+</body>
+
+</html>
