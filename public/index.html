@@ -1,189 +1,391 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <title>Meet Yolanda</title>
-
-  <link
-    rel="stylesheet"
-    href="/style.css"
-  >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meet Someone Special</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/script.js" defer></script>
 </head>
 
-
 <body>
+  <header class="header">
+    <a class="logo" href="/">MeetUp</a>
+    <span class="header-note">♥ Find Your Match</span>
+  </header>
 
-<main class="page">
-
-  <section class="profile-card">
-
-    <!-- PHOTO -->
-
-    <div class="photo-area">
-
-      <img
-        src="/yolanda.jpg"
-        alt="Yolanda"
-        class="profile-photo"
-      >
-
-    </div>
-
-
-    <!-- PROFILE -->
-
-    <div class="profile-content">
-
-      <div class="match-label">
-        Recommended Match
+  <main>
+    <!-- STEP 1: BASIC INFORMATION -->
+    <section class="step active" id="step1">
+      <div class="hero">
+        <div class="hero-content">
+          <span class="badge">Find Someone Special</span>
+          <h1>Meet Someone<br><span>Special</span></h1>
+          <p>
+            Tell us a little about yourself and we'll help you
+            discover someone who matches your interests.
+          </p>
+        </div>
       </div>
 
-      <h1>
-        Yolanda
-      </h1>
-
-      <div class="profile-meta">
-
-        <span>
-          37 years old
-        </span>
-
-        <span class="dot">
-          •
-        </span>
-
-        <span>
-          Houston, TX
-        </span>
-
-      </div>
-
-
-      <section class="profile-section">
-
-        <h2>
-          About her
-        </h2>
-
-        <p>
-          I’m originally from China and currently
-          living in the United States. I enjoy
-          traveling, reading, exploring different
-          kinds of food, and giving back to the
-          community. I love experiencing life,
-          meeting new people, and appreciating the
-          little moments that make life meaningful.
-        </p>
-
-        <p>
-          I’ve never been married and don’t have
-          any children. At this stage of my life,
-          I’m hoping to meet someone truly special
-          — someone with whom I can share laughter,
-          experiences, and everyday moments. I
-          value honesty, mutual respect,
-          understanding, and genuine connection,
-          and I’m looking for a meaningful
-          relationship that can grow into
-          something lasting.
-        </p>
-
-      </section>
-
-
-      <section class="profile-section">
-
-        <h2>
-          Interests
-        </h2>
-
-        <div class="tags">
-
-          <span>
-            Travel
-          </span>
-
-          <span>
-            Reading
-          </span>
-
-          <span>
-            Food
-          </span>
-
-          <span>
-            Community
-          </span>
-
-          <span>
-            Exploring
-          </span>
-
+      <div class="card first-card">
+        <div class="progress" aria-label="Step 1 of 4">
+          <span class="current">1</span>
+          <i></i>
+          <span>2</span>
+          <i></i>
+          <span>3</span>
+          <i></i>
+          <span>4</span>
         </div>
 
-      </section>
+        <h2 tabindex="-1">Tell us about yourself</h2>
+        <p class="subtitle">Let's start with some basic information.</p>
 
+        <form id="profileForm">
+          <label for="name">Your Name</label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            maxlength="100"
+            autocomplete="given-name"
+            placeholder="Enter your name"
+            required
+          >
 
-      <section class="contact-section">
+          <label for="age">Your Age</label>
+          <input
+            id="age"
+            name="age"
+            type="number"
+            min="18"
+            max="100"
+            step="1"
+            placeholder="Enter your age"
+            required
+          >
 
-        <h2>
-          Interested? Get in touch
-        </h2>
+          <label for="city">Your City</label>
+          <input
+            id="city"
+            name="city"
+            type="text"
+            maxlength="150"
+            autocomplete="address-level2"
+            placeholder="Example: Los Angeles"
+            required
+          >
 
-        <p class="contact-description">
-          If you'd like to connect, you can leave
-          your contact information or reach out
-          directly.
+          <p class="message error" id="basicError" role="alert"></p>
+
+          <button type="submit" class="button primary">
+            Continue →
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- STEP 2: PREFERENCES -->
+    <section class="step" id="step2" hidden>
+      <div class="card">
+        <div class="progress" aria-label="Step 2 of 4">
+          <span class="completed">✓</span>
+          <i></i>
+          <span class="current">2</span>
+          <i></i>
+          <span>3</span>
+          <i></i>
+          <span>4</span>
+        </div>
+
+        <h2 tabindex="-1">What type of woman are you interested in?</h2>
+        <p class="subtitle">Tell us what you're looking for.</p>
+
+        <form id="preferencesForm">
+          <fieldset>
+            <legend>Preferred age range</legend>
+
+            <div class="options age-options">
+              <label class="option">
+                <input type="radio" name="ageRange" value="25-35" required>
+                <span>25–35</span>
+              </label>
+
+              <label class="option">
+                <input type="radio" name="ageRange" value="35-45">
+                <span>35–45</span>
+              </label>
+
+              <label class="option">
+                <input type="radio" name="ageRange" value="45-55">
+                <span>45–55</span>
+              </label>
+
+              <label class="option">
+                <input type="radio" name="ageRange" value="55+">
+                <span>55+</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Personality — choose at least one</legend>
+
+            <div class="options">
+              <label class="option">
+                <input type="checkbox" name="personality" value="Kind">
+                <span>Kind</span>
+              </label>
+
+              <label class="option">
+                <input type="checkbox" name="personality" value="Caring">
+                <span>Caring</span>
+              </label>
+
+              <label class="option">
+                <input type="checkbox" name="personality" value="Romantic">
+                <span>Romantic</span>
+              </label>
+
+              <label class="option">
+                <input type="checkbox" name="personality" value="Independent">
+                <span>Independent</span>
+              </label>
+
+              <label class="option">
+                <input
+                  type="checkbox"
+                  name="personality"
+                  value="Family-oriented"
+                >
+                <span>Family-oriented</span>
+              </label>
+
+              <label class="option">
+                <input type="checkbox" name="personality" value="Outgoing">
+                <span>Outgoing</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <label for="relationshipGoal">Relationship goal</label>
+          <select id="relationshipGoal" name="relationshipGoal" required>
+            <option value="">Select one</option>
+            <option value="Serious relationship">Serious relationship</option>
+            <option value="Marriage">Marriage</option>
+            <option value="Dating">Dating</option>
+            <option value="Friendship first">Friendship first</option>
+          </select>
+
+          <p class="message error" id="preferencesError" role="alert"></p>
+
+          <div class="buttons">
+            <button type="button" class="button secondary" data-step="1">
+              ← Back
+            </button>
+            <button type="submit" class="button primary">
+              Continue →
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- STEP 3: INTERESTS -->
+    <section class="step" id="step3" hidden>
+      <div class="card">
+        <div class="progress" aria-label="Step 3 of 4">
+          <span class="completed">✓</span>
+          <i></i>
+          <span class="completed">✓</span>
+          <i></i>
+          <span class="current">3</span>
+          <i></i>
+          <span>4</span>
+        </div>
+
+        <h2 tabindex="-1">Tell us more about yourself</h2>
+        <p class="subtitle">Your interests help us find a better match.</p>
+
+        <form id="interestsForm">
+          <label for="interests">Your hobbies &amp; interests</label>
+          <input
+            id="interests"
+            name="interests"
+            type="text"
+            maxlength="500"
+            placeholder="Travel, cooking, music..."
+          >
+
+          <label for="about">About you</label>
+          <textarea
+            id="about"
+            name="about"
+            rows="6"
+            maxlength="5000"
+            placeholder="Tell us a little about yourself..."
+          ></textarea>
+
+          <fieldset>
+            <legend>What do you enjoy doing?</legend>
+
+            <div class="options">
+              <label class="option">
+                <input type="checkbox" name="activities" value="Travel">
+                <span>Travel</span>
+              </label>
+
+              <label class="option">
+                <input type="checkbox" name="activities" value="Cooking">
+                <span>Cooking</span>
+              </label>
+
+              <label class="option">
+                <input type="checkbox" name="activities" value="Music">
+                <span>Music</span>
+              </label>
+
+              <label class="option">
+                <input type="checkbox" name="activities" value="Sports">
+                <span>Sports</span>
+              </label>
+
+              <label class="option">
+                <input type="checkbox" name="activities" value="Movies">
+                <span>Movies</span>
+              </label>
+
+              <label class="option">
+                <input type="checkbox" name="activities" value="Reading">
+                <span>Reading</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <p class="privacy-note">
+            By continuing, you agree to submit the information you entered
+            for this introduction.
+          </p>
+
+          <p class="message error" id="profileError" role="alert"></p>
+
+          <div class="buttons">
+            <button
+              type="button"
+              id="profileBack"
+              class="button secondary"
+              data-step="2"
+            >
+              ← Back
+            </button>
+
+            <button type="submit" id="findMatch" class="button primary">
+              Find My Match ♥
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- STEP 4: MATCH -->
+    <section class="step" id="step4" hidden>
+      <div class="match-page">
+        <span class="match-badge">♥ Your Match</span>
+
+        <h1 tabindex="-1">Meet Someone<br><span>Special</span></h1>
+        <p class="match-description">
+          Get to know Yolanda and see whether you share a connection.
         </p>
 
+        <article class="match-card">
+          <div class="profile-photo">
+            <img src="/yolanda.jpg" alt="Yolanda" class="profile-image">
+          </div>
 
-        <a
-          href="/contact.html"
-          class="button primary"
-        >
-          Leave Your Contact Information
-        </a>
+          <div class="match-info">
+            <div class="match-label">Recommended Match</div>
 
+            <h2>Yolanda</h2>
 
-        <!-- 修改 href 为你自己的 WhatsApp -->
+            <div class="match-details">
+              <span>37 years old</span>
+              <span aria-hidden="true">•</span>
+              <span>Houston, TX</span>
+            </div>
 
-        <a
-          href="#"
-          class="button whatsapp"
-          id="whatsappButton"
-        >
-          WhatsApp
-        </a>
+            <section class="match-section">
+              <h3>About her</h3>
 
+              <p>
+                I’m originally from China and currently living in the
+                United States. I enjoy traveling, reading, exploring
+                different kinds of food, and giving back to the
+                community. I love experiencing life, meeting new
+                people, and appreciating the little moments that
+                make life meaningful.
+              </p>
 
-        <!-- 修改 href 为你自己的 Telegram -->
+              <p>
+                I’ve never been married and don’t have any children.
+                At this stage of my life, I’m hoping to meet someone
+                truly special — someone with whom I can share
+                laughter, experiences, and everyday moments. I
+                value honesty, mutual respect, understanding, and
+                genuine connection, and I’m looking for a meaningful
+                relationship that can grow into something lasting.
+              </p>
+            </section>
 
-        <a
-          href="#"
-          class="button telegram"
-          id="telegramButton"
-        >
-          Telegram
-        </a>
+            <section class="match-section">
+              <h3>Interests</h3>
 
-      </section>
+              <div class="tags">
+                <span>Travel</span>
+                <span>Reading</span>
+                <span>Food</span>
+                <span>Community</span>
+                <span>Exploring</span>
+              </div>
+            </section>
 
-    </div>
+            <section class="contact-box">
+              <h3>Interested? Get in touch</h3>
 
-  </section>
+              <a href="/contact.html" class="button primary">
+                Leave Your Contact Information
+              </a>
 
-</main>
+              <a
+                id="whatsappLink"
+                href="https://wa.me/15551234567"
+                class="button whatsapp"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                WhatsApp
+              </a>
 
+              <a
+                id="telegramLink"
+                href="https://t.me/sophia_match"
+                class="button telegram"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Telegram
+              </a>
+            </section>
+          </div>
+        </article>
+      </div>
+    </section>
 
-<script src="/script.js"></script>
+    <noscript>
+      <p class="card">Please enable JavaScript to use this website.</p>
+    </noscript>
+  </main>
 
+  <footer>© 2026 MeetUp. All rights reserved.</footer>
 </body>
-
 </html>
