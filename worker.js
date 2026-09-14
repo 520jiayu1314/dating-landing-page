@@ -4,7 +4,19 @@ const COOKIE_SECONDS = 60 * 60 * 24 * 365;
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
-
+       // Apply the country restriction before serving any page or API.
+    if (request.cf?.country !== "US") {
+      return new Response(
+        "This website is available only to visitors connecting from the United States.",
+        {
+          status: 403,
+          headers: {
+            "Content-Type": "text/plain; charset=UTF-8",
+            "Cache-Control": "no-store"
+          }
+        }
+      );
+    }
     const isHome =
       url.pathname === "/" ||
       url.pathname === "/index" ||
