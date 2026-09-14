@@ -538,3 +538,35 @@ function json(data, status = 200, extraHeaders = {}) {
     }
   });
 }
+function detectDevice(request) {
+  const ua = request.headers.get("User-Agent") || "";
+  const mobileHint = request.headers.get("Sec-CH-UA-Mobile");
+
+  if (!ua.trim()) {
+    return "unknown";
+  }
+
+  if (/bot|crawler|spider|headless/i.test(ua)) {
+    return "bot";
+  }
+
+  if (
+    /iPad|Tablet|Kindle|Silk|PlayBook/i.test(ua) ||
+    (/Android/i.test(ua) && !/Mobile/i.test(ua))
+  ) {
+    return "tablet";
+  }
+
+  if (
+    mobileHint === "?1" ||
+    /iPhone|iPod|Android.*Mobile|Windows Phone|Mobi/i.test(ua)
+  ) {
+    return "mobile";
+  }
+
+  if (/Windows NT|Macintosh|X11|CrOS|Linux/i.test(ua)) {
+    return "desktop";
+  }
+
+  return "unknown";
+}
